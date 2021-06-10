@@ -10,23 +10,29 @@
  * Done: Display the guess history using displayHistory() function
  * Done: Use the initGame() function to restart the game
  */
+ 
+// Variable to store the list of guesses
+let guesses = [];
+let guessedNumber = [];
+
+getRandomNumber = () => {
+  // *CODE GOES BELOW HERE *
+  let correctNumber = Math.ceil(Math.random() * 100);
+  return correctNumber;
+}
+
+// Variable for store the correct random number
+var correctNumber = getRandomNumber();
+ 
 
 /**
  * Initialize a new game by resetting all values and content on the page
  * HINT: reset the correctNumber, guesses, and HTML content
  */
- 
- 
-
- 
-// Variable to store the list of guesses
-let guesses = [];
- let guessedNumber = [];
- 
- initGame = () => {
+  initGame = () => {
   // *CODE GOES BELOW HERE *
   guesses = [];
-  let correctNumber = null;
+  correctNumber = getRandomNumber();
   document.getElementById("number-guess").value = null;
   document.getElementById("result").innerHTML = guesses;
   resetResultContent();
@@ -40,13 +46,6 @@ resetResultContent = () => {
   document.getElementById("history").innerHTML = guessedNumber;
 }
 
-getRandomNumber = () => {
-  // *CODE GOES BELOW HERE *
-  let correctNumber = Math.ceil(Math.random() * 100);
-  return correctNumber;
-}
-// Variable for store the correct random number
-const correctNumber = getRandomNumber();
 window.onload = () => {
     document.getElementById("number-submit").addEventListener("click", playGame);
     document.getElementById("restart-game").addEventListener("click", initGame)
@@ -66,8 +65,8 @@ playGame = () => {
  */
 // *CODE GOES BELOW HERE *
 displayResult = (numberGuess, correctNumber) => {
-  (numberGuess == correctNumber) ? guesses.push(showYouWon(numberGuess).text) : (
-    (numberGuess > correctNumber) ? guesses.push(showNumberAbove(numberGuess).text)  : guesses.push(showNumberBelow(numberGuess)));
+  (numberGuess == correctNumber) ? showYouWon(numberGuess) : (
+    (numberGuess > correctNumber) ? showNumberAbove(numberGuess) : showNumberBelow(numberGuess));
 }
 
 /**
@@ -96,10 +95,8 @@ saveGuessHistory = (guess,numberGuess) => {
  * HINT: use while loop and string concatentation to create a list of guesses
  */
 displayHistory = () => {
-  // document.getElementById("history").innerHTML = guesses.map(guess => guess + numberGuess);
-  
   let list = `<ul class='list-group'>
-    ${guessedNumber.map( (guess) => { return "<li class='list-group-item'>" + guess + "</li>"; 
+    ${guessedNumber.map((guess) => { return "<li class='list-group-item'>" + guess + "</li>"; 
   })} </ul>`;
   document.getElementById("history").innerHTML = list;
 }
@@ -160,17 +157,3 @@ showNumberBelow = (numberGuess) => {
   let dialog = getDialog("warning", text);
   document.getElementById("result").innerHTML = dialog;
 }
-
-
-
-
-
-// displayHistory = (correctNumber) => {
-//   document.getElementById("history").innerHTML = `<ul class='list-group'>
-//   <ul class='list-group'>
-//    ${guesses.map( guess => {
-//       "<li class='list-group-item'>" + guess + correctNumber + "</li>" }
-//      )}
-//      ${console.log(guesses)}
-//   </ul>`
-// }
